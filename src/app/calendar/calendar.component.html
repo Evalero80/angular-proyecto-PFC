@@ -1,0 +1,171 @@
+<!-- CONTENEDOR PRINCIPAL -->
+<div class="app-calendar-container">
+  <!-- FORMULARIO LATERAL -->
+  <div class="app-form-section">
+    <h2>Crear Evento</h2>
+
+    <form class="evento-form">
+      <label for="title">Título</label>
+      <input type="text" id="title" placeholder="Nombre del evento" />
+
+      <label for="description">Descripción</label>
+      <textarea id="description" placeholder="Detalles del evento"></textarea>
+
+      <label for="color">Color</label>
+      <input type="color" id="color" value="#000000" />
+
+      <label for="start">Fecha Inicial</label>
+      <input type="datetime-local" id="start" />
+
+      <label for="end">Fecha Final</label>
+      <input type="datetime-local" id="end" />
+
+      <button type="button" class="btn-guardar-evento" (click)="guardarEvento()">
+        {{ modoEdicion ? 'Guardar Cambios' : 'Crear Evento' }}
+      </button>
+    </form>
+  </div>
+
+  <!-- CALENDARIO PRINCIPAL -->
+  <div class="app-calendar-main">
+    <div class="app-calendar-header">
+      <div class="app-calendar-title">{{ currentViewTitle }}</div>
+      <div class="app-calendar-controls">
+        <button class="btn-vista" [class.active]="currentView === 'month'" (click)="changeView('month')">Mes</button>
+        <button class="btn-vista" [class.active]="currentView === 'week'" (click)="changeView('week')">Semana</button>
+        <button class="btn-vista" [class.active]="currentView === 'day'" (click)="changeView('day')">Día</button>
+        <div class="navegacion-fechas">
+          <button class="btn-navegar" (click)="prev()"><svg xmlns="http://www.w3.org/2000/svg" width="50" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-big-left-icon lucide-arrow-big-left"><path d="M18 15h-6v4l-7-7 7-7v4h6v6z"/></svg></button>
+          <button class="btn-navegar" (click)="next()"><svg xmlns="http://www.w3.org/2000/svg" width="50" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-big-right-icon lucide-arrow-big-right"><path d="M6 9h6V5l7 7-7 7v-4H6V9z"/></svg></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- VISTA DE MES -->
+    <div *ngIf="currentView === 'month'" class="vista-mes">
+      <div class="mes-dias-semana">
+        <div class="dia-semana">Lun</div>
+        <div class="dia-semana">Mar</div>
+        <div class="dia-semana">Mie</div>
+        <div class="dia-semana">Jue</div>
+        <div class="dia-semana">Vie</div>
+        <div class="dia-semana">Sáb</div>
+        <div class="dia-semana">Dom</div>
+      </div>
+
+      <div class="mes-grid">
+        <div *ngFor="let cell of calendarGrid" class="mes-celda" [class.hoy]="cell.isToday">
+          <span class="numero-dia">{{ cell.day }}</span>
+          <div class="evento-contenedor">
+            <div *ngFor="let grupo of groupOverlappingEvents(getEventsForDay(cell.date))" class="grupo-eventos">
+  <div *ngFor="let evento of grupo" class="tarjeta-evento"
+       [style.background-color]="evento.color"
+       (click)="showModal(evento)">
+    {{ evento.titulo }}
+  </div>
+</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VISTA DE SEMANA -->
+    <div *ngIf="currentView === 'week'" class="vista-semana">
+  <div class="semana-columnas">
+    <!-- Horas -->
+    <div class="semana-horas">
+      <div class="hora-bloque" *ngFor="let hour of hours">{{ hour }}</div>
+    </div>
+
+    <!-- Días -->
+    <div class="semana-dias">
+      <div class="semana-dia" *ngFor="let day of weekDays">
+        <h3 class="nombre-dia">{{ day.name }}</h3>
+        <div class="bloques-hora" *ngFor="let hour of hours; let i = index">
+          <div class="evento-slot">
+<div *ngFor="let grupo of groupOverlappingEvents(getEventsForHour(day.date, hour))" class="grupo-eventos">
+  <div *ngFor="let evento of grupo" class="tarjeta-evento"
+       [style.background-color]="evento.color"
+       (click)="showModal(evento)">
+    {{ evento.titulo }}
+  </div>
+</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- VISTA DE DÍA -->
+<div *ngIf="currentView === 'day'" class="vista-dia">
+  <div class="dia-titulo">{{ currentDate | date:'fullDate' }}</div>
+  <div class="dia-horarios">
+    <div *ngFor="let hour of hours" class="horario">
+      <div class="hora-label">{{ hour }}</div>
+      <div class="evento-slot">
+<div *ngFor="let grupo of groupOverlappingEvents(getEventsForHour(currentDate, hour))" class="grupo-eventos">
+  <div *ngFor="let evento of grupo" class="tarjeta-evento"
+       [style.background-color]="evento.color"
+       (click)="showModal(evento)">
+    {{ evento.titulo }}
+  </div>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+    <!-- Modal de detalles - ahora editable -->
+<!-- Modal estilo Dolibarr - editable y con botón Eliminar -->
+<!-- Modal estilo Dolibarr -->
+<!-- Formulario único para crear y editar -->
+<div id="event-detail-modal" class="modal" *ngIf="selectedEvent !== null">
+  <div class="modal-header">
+    {{ selectedEvent.titulo }}
+  </div>
+
+  <div class="modal-body">
+    <!-- Campo: Título -->
+    <div class="input-group">
+      <label for="edit-title">Título:</label>
+      <input type="text" id="edit-title" [(ngModel)]="selectedEvent.titulo" />
+    </div>
+
+    <!-- Campo: Descripción -->
+    <div class="input-group">
+      <label for="edit-descripcion">Descripción:</label>
+      <textarea id="edit-descripcion" [(ngModel)]="selectedEvent.descripcion"></textarea>
+    </div>
+
+    <!-- Campo: Fecha inicial -->
+    <div class="input-group">
+      <label for="edit-inicio">Fecha y Hora Inicial:</label>
+      <input type="datetime-local" id="edit-inicio" [(ngModel)]="selectedEvent.inicio" />
+    </div>
+
+    <!-- Campo: Fecha final -->
+    <div class="input-group">
+      <label for="edit-fin">Fecha y Hora Final:</label>
+      <input type="datetime-local" id="edit-fin" [(ngModel)]="selectedEvent.fin" />
+    </div>
+
+    <!-- Campo: Color -->
+    <div class="input-group">
+      <label for="edit-color">Color:</label>
+      <input type="color" id="edit-color" [(ngModel)]="selectedEvent.color" />
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <!-- Botón Guardar -->
+    <button type="button" class="btn-guardar" (click)="guardarCambios()">Guardar</button>
+
+    <!-- Botón Eliminar -->
+    <button type="button" class="btn-eliminar" (click)="eliminarEvento(selectedEvent!.id)">Eliminar</button>
+
+    <!-- Botón Cerrar -->
+    <button type="button" class="btn-cerrar" (click)="closeModal()">Cerrar</button>
+  </div>
+</div>
+  </div>
+</div>

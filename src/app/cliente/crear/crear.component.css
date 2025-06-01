@@ -1,0 +1,257 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.container-main {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+/* Barra superior */
+.topbar {
+  background-color: #eef3ff;
+  padding: 15px 30px;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.topbar h2 {
+  color: #3aa378;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* Sidebar izquierdo (formulario) */
+.sidebar-left {
+  width: 300px;
+  background-color: #ffffff;
+  border-right: 1px solid #ccc;
+  padding: 30px 20px;
+  overflow-y: auto;
+}
+
+.form-creacion {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-creacion label {
+  color: #333;
+  font-weight: 600;
+}
+
+.form-creacion input,
+.form-creacion textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+}
+
+.form-creacion input:focus,
+.form-creacion textarea:focus {
+  border-color: #3aa378;
+  outline: none;
+}
+
+.form-creacion textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-primary {
+  background-color: #3aa378;
+  color: white;
+}
+.btn-primary:hover {
+  background-color: #288b62;
+}
+
+.btn-secondary {
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ccc;
+}
+.btn-secondary:hover {
+  background-color: #e0e0e0;
+}
+
+/* Contenido derecho - Listas de clientes */
+.content-right {
+  flex: 1;
+  padding: 30px 40px;
+  overflow-y: auto;
+}
+
+.lists-container {
+  display: flex;
+  gap: 30px;
+  flex-wrap: nowrap;
+}
+
+.list-section {
+  flex: 1;
+  min-width: 300px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  min-height: 200px;
+}
+
+/* Encabezado de lista */
+.list-header {
+  background-color: #3aa378;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 6px 6px 0 0;
+  font-weight: 600;
+  margin: -20px -20px 15px -20px;
+}
+
+/* Items de cliente */
+.client-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-bottom: 1px solid #eee;
+  transition: background 0.2s ease;
+  cursor: grab;
+}
+.client-item:last-child {
+  border-bottom: none;
+}
+.client-item:hover {
+  background-color: #f9fafb;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+.red {
+  background-color: #ef4444;
+}
+.green {
+  background-color: #3aa378;
+}
+
+.client-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.client-info span {
+  font-size: 14px;
+  color: #333;
+}
+
+.details-btn {
+  background: none;
+  border: none;
+  color: #1b7751;
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.details-btn:hover {
+  color: #3aa378;
+}
+
+/* Drag & Drop estilos */
+.list-section[cdkDropList] {
+  padding: 10px;
+  border: 2px dashed transparent;
+  transition: border-color 0.3s ease;
+}
+
+.list-section[cdkDropList].cdk-drop-list-dragging {
+  border-color: #1c6e4c;
+  background: #f9f9f9;
+}
+
+.cdk-drag-preview .client-item {
+  transform: scale(1.02);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  background-color: #fff !important;
+}
+
+.list-items {
+  min-height: 100px;
+  padding: 10px;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #3aa37780;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 8px;
+  padding: 25px;
+  max-width: 500px;
+  width: 90%;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.modal-title {
+  font-size: 18px;
+  color: #196948;
+  font-weight: 600;
+}
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333;
+}
+
+.modal-body p {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}

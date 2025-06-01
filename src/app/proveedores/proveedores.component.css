@@ -1,0 +1,244 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Contenedor principal full-screen */
+.dolibarr-full-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+/* Barra superior */
+.dolibarr-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #e3fdf2;
+  padding: 15px 30px;
+  border-bottom: 1px solid #ccc;
+}
+
+.dolibarr-title {
+  font-size: 20px;
+  color: #288b62;
+  font-weight: 600;
+}
+
+.dolibarr-search input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 250px;
+}
+
+/* Contenido principal */
+.dolibarr-main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Sidebar */
+.dolibarr-sidebar {
+  width: 220px;
+  background-color: #ffffff;
+  border-right: 1px solid #ccc;
+  padding: 20px;
+}
+
+.sidebar-title {
+  font-size: 16px;
+  color: #288b62;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.sidebar-actions {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar-actions li {
+  margin-bottom: 10px;
+}
+
+.sidebar-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.sidebar-btn:hover {
+  background-color: #e0e0e0;
+}
+
+/* Tabla wrapper */
+.dolibarr-table-wrapper {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Tabla estilo Dolibarr */
+.dolibarr-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+}
+
+.dolibarr-header-row {
+  background-color: #288b62;
+  color: white;
+}
+
+.dolibarr-header {
+  padding: 12px;
+  font-weight: 600;
+  border-right: 1px solid #fff;
+}
+
+.dolibarr-row:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.dolibarr-row:hover {
+  background-color: #f1f1f1;
+}
+
+.dolibarr-cell {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  border-right: 1px solid #eee;
+  color: #333;
+}
+
+.actions .action-edit,
+.actions .action-delete {
+  margin-right: 10px;
+  text-decoration: none;
+  font-size: 14px;
+  margin: 0 4px;
+}
+
+.action-edit {
+  color: #207753;
+  background: #cce0ff;
+  border: 1px solid #a3cfbb;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.action-edit:hover {
+  background-color: #add8ff;
+}
+
+.action-delete {
+  color: #dc3545;
+  background: #fcd5ce;
+  border: 1px solid #f8d7da;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.action-delete:hover {
+  background-color: #f1aeb5;
+}
+
+/* Formulario estilo Dolibarr */
+.form-dolibarr {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+.form-dolibarr h2 {
+  margin-bottom: 20px;
+  font-size: 18px;
+  color: #228058;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.form-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-col label {
+  font-weight: bold;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.form-col input,
+.form-col select,
+.form-col textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.form-col select {
+  height: 40px;
+}
+
+.form-col input:focus,
+.form-col select:focus,
+.form-col textarea:focus {
+  outline: none;
+  border-color: #1b724e;
+  box-shadow: 0 0 0 3px #105035;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-cancel,
+.btn-save {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.btn-save {
+  background-color: #1b724e;
+  color: white;
+}
+.btn-save:hover {
+  background-color: #1b724e;
+}
+
+.btn-cancel {
+  background-color: #6c757d;
+  color: white;
+}
+.btn-cancel:hover {
+  background-color: #5a6268;
+}

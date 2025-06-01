@@ -1,0 +1,143 @@
+<!-- Contenedor principal full-screen -->
+<div class="dolibarr-full-container">
+  <!-- Barra superior -->
+  <div class="dolibarr-topbar">
+    <h2 class="dolibarr-title">Gestión de Proveedores</h2>
+    <div class="dolibarr-search">
+      <input
+        type="text"
+        placeholder="Buscar por nombre o empresa..."
+        [(ngModel)]="filtro"
+        (input)="buscarProveedor()"
+      />
+    </div>
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="dolibarr-main">
+    <!-- Sidebar acciones rápidas -->
+    <div class="dolibarr-sidebar">
+      <h3 class="sidebar-title">Acciones</h3>
+      <ul class="sidebar-actions">
+        <li><button class="sidebar-btn" (click)="nuevoProveedor()">+ Nuevo Proveedor</button></li>
+      </ul>
+    </div>
+
+    <!-- Formulario / Tabla -->
+    <div class="dolibarr-table-wrapper">
+      <!-- Formulario -->
+      <div *ngIf="mostrarFormulario" class="form-dolibarr">
+        <h2>{{ modoEdicion ? 'Editar Proveedor' : 'Nuevo Proveedor' }}</h2>
+
+        <div class="form-row">
+          <div class="form-col">
+            <label>Nombre del Responsable</label>
+            <input type="text" [(ngModel)]="proveedorSeleccionado.nombre" required />
+          </div>
+          <div class="form-col">
+            <label>Empresa</label>
+            <input type="text" [(ngModel)]="proveedorSeleccionado.empresa" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-col">
+            <label>Email</label>
+            <input type="email" [(ngModel)]="proveedorSeleccionado.email" />
+          </div>
+          <div class="form-col">
+            <label>Teléfono</label>
+            <input type="tel" [(ngModel)]="proveedorSeleccionado.telefono" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-col">
+            <label>Dirección</label>
+            <input type="text" [(ngModel)]="proveedorSeleccionado.direccion" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-col">
+            <label>Categoría de productos</label>
+            <select [(ngModel)]="proveedorSeleccionado.categoria">
+              <option *ngFor="let c of categorias" [value]="c.value">{{ c.label }}</option>
+            </select>
+          </div>
+          <div class="form-col">
+            <label>Condiciones de pago</label>
+            <select [(ngModel)]="proveedorSeleccionado.condicionesPago">
+              <option *ngFor="let c of condicionesPago" [value]="c.value">{{ c.label }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-col">
+            <label>Página Web (opcional)</label>
+            <input type="url" [(ngModel)]="proveedorSeleccionado.paginaWeb" />
+          </div>
+          <div class="form-col">
+            <label>CIF / NIF</label>
+            <input type="text" [(ngModel)]="proveedorSeleccionado.cif" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-col">
+            <label>Notas adicionales</label>
+            <textarea rows="4" [(ngModel)]="proveedorSeleccionado.notas"></textarea>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-col">
+         <label>
+  <input type="checkbox" [(ngModel)]="proveedorSeleccionado.activo" />
+  Activo
+</label>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button (click)="cancelar()" class="btn-cancel">Cancelar</button>
+          <button (click)="guardarProveedor()" class="btn-save">Guardar Cambios</button>
+        </div>
+      </div>
+
+      <!-- Tabla -->
+      <div class="table-container" *ngIf="!mostrarFormulario">
+        <table class="dolibarr-table">
+          <thead>
+            <tr class="dolibarr-header-row">
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Empresa</th>
+              <th>Email</th>
+              <th>Teléfono</th>
+              <th>Categoría</th>
+              <th>Activo</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of proveedores" class="dolibarr-row">
+              <td class="dolibarr-cell">{{ p.id }}</td>
+              <td class="dolibarr-cell">{{ p.nombre }}</td>
+              <td class="dolibarr-cell">{{ p.empresa }}</td>
+              <td class="dolibarr-cell">{{ p.email }}</td>
+              <td class="dolibarr-cell">{{ p.telefono }}</td>
+              <td class="dolibarr-cell">{{ p.categoria }}</td>
+              <td class="dolibarr-cell">{{ p.activo ? 'Sí' : 'No' }}</td>
+              <td class="dolibarr-cell actions">
+                <button class="action-edit" (click)="editarProveedor(p)">Editar</button>
+                <button class="action-delete" (click)="eliminarProveedor(p.id)">Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

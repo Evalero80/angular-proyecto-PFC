@@ -1,0 +1,138 @@
+<div class="container-main">
+  <!-- Sidebar izquierdo (Crear Cliente) -->
+  <div class="sidebar-left">
+    <h2 class="section-title">Crear Cliente</h2>
+    
+    <div class="form-creacion">
+      <form (ngSubmit)="onSubmit()">
+        <!-- Nombre -->
+        <div>
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" name="nombreT" [(ngModel)]="model.nombre" required />
+        </div>
+
+        <!-- Apellidos -->
+        <div>
+          <label for="apellidos">Apellidos:</label>
+          <input type="text" id="apellidos" name="apellidosT" [(ngModel)]="model.apellidos" required />
+        </div>
+
+        <!-- Teléfono -->
+        <div>
+          <label for="telefono">Teléfono:</label>
+          <input type="text" id="telefono" name="telefonoT" [(ngModel)]="model.telefono" required />
+        </div>
+
+        <!-- DNI -->
+        <div>
+          <label for="dni">DNI:</label>
+          <input type="text" id="dni" name="dniT" [(ngModel)]="model.dni" required />
+        </div>
+
+        <!-- Problema técnico -->
+        <div>
+          <label for="problema">Problema Técnico:</label>
+          <textarea id="problema" name="problemaT" [(ngModel)]="model.problemaTecnico" required></textarea>
+        </div>
+
+        <!-- Botones -->
+        <div style="display: flex; gap: 15px;">
+          <button type="submit" class="btn btn-primary">Guardar</button>
+         <button type="button" class="btn btn-secondary" (click)="imprimirDatos()">Imprimir</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Contenido derecho (Listas de clientes) -->
+  <div class="content-right">
+    <!-- Título -->
+    <div class="topbar">
+      <h2>Clientes</h2>
+    </div>
+
+    <!-- Listas de pendientes y terminados -->
+    <div class="lists-container">
+      <!-- Pendientes -->
+      <div class="list-section">
+        <div class="list-header">Pendientes</div>
+        <div
+          cdkDropList
+          #todoList="cdkDropList"
+          [cdkDropListData]="todo"
+          [cdkDropListConnectedTo]="[doneList]"
+          class="list-items"
+          (cdkDropListDropped)="drop($event)"
+        >
+          @for (item of todo; track item) {
+            <div class="client-item" cdkDrag>
+              <div style="display: flex; align-items: center;">
+                <span class="status-dot red"></span>
+                <div class="client-info">
+                  <span>{{ item.nombre }} {{ item.apellidos }}</span>
+                  <span>{{ item.telefono }} | {{ item.dni }}</span>
+                </div>
+              </div>
+              <button class="details-btn" (click)="openDetails(item)">👁️</button>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Terminados -->
+      <div class="list-section">
+        <div class="list-header">Terminados</div>
+        <div
+          cdkDropList
+          #doneList="cdkDropList"
+          [cdkDropListData]="done"
+          [cdkDropListConnectedTo]="[todoList]"
+          class="list-items"
+          (cdkDropListDropped)="drop($event)"
+        >
+          @for (item of done; track item) {
+            <div class="client-item" cdkDrag>
+              <div style="display: flex; align-items: center;">
+                <span class="status-dot green"></span>
+                <div class="client-info">
+                  <span>{{ item.nombre }} {{ item.apellidos }}</span>
+                  <span>{{ item.telefono }} | {{ item.dni }}</span>
+                </div>
+              </div>
+              <button class="details-btn" (click)="openDetails(item)">👁️</button>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de detalles -->
+<div class="modal" *ngIf="showModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">Detalles del Cliente</div>
+      <button class="modal-close" (click)="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <p><strong>Nombre:</strong> {{ selectedElement?.nombre }}</p>
+      <p><strong>Apellidos:</strong> {{ selectedElement?.apellidos }}</p>
+      <p><strong>Teléfono:</strong> {{ selectedElement?.telefono }}</p>
+      <p><strong>DNI:</strong> {{ selectedElement?.dni }}</p>
+      <p><strong>Problema Técnico:</strong> {{ selectedElement?.problemasTecnicos }}</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="closeModal()">Cerrar</button>
+      <button class="btn btn-danger" (click)="eliminarClientePorNombre()">Eliminar</button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+

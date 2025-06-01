@@ -1,0 +1,51 @@
+<div class="containerHeader">
+    <h1 routerLink="inicio">TiendaTech_</h1>
+
+
+<!-- PERFIL DE USUARIO -->
+  <div *ngIf="logueado" class="usuario-container" (click)="toggleMenu()">
+     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round-icon lucide-user-round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+    <p>{{ nombreUsuario }}</p>
+
+    <!-- Menú desplegable -->
+    <div class="profile-dropdown" *ngIf="mostrarMenu">
+      <button class="btn-cerrar" (click)="cerrarSesion()">Cerrar Sesión</button>
+    </div>
+  </div>
+
+  <!-- Si no está logueado -->
+  <div *ngIf="!logueado" class="usuario-container" (click)="router.navigate(['/login'])">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round-icon lucide-user-round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+  </div>
+
+  
+
+</div>
+<div class="div-1">
+    
+  <div class="div-enlaces">
+        
+        <a  [routerLink]="'/CrearCliente'">C.Clientes </a>
+        <a  [routerLink]="'/CrearProducto'">C.Productos</a>
+        <div class="dropdown">
+            <span class="dropbtn">Almacenado</span>
+            <div class="dropdown-content">
+              <a  [routerLink]="'/EnTienda'">General</a>
+              <a  [routerLink]="'/alm1'">Almacén 1</a>
+              <a  [routerLink]="'/alm2'">Almacén 2</a>
+              <a  [routerLink]="'/alm3'">Almacén 3</a>
+              
+            </div>
+          </div>
+        <a  [routerLink]="'/proveedor'">Proveedores</a>
+        <a [routerLink]="'/calendario'">Calendario</a>
+    </div>
+
+
+
+
+ 
+
+  
+</div>
+

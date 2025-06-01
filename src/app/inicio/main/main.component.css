@@ -1,0 +1,9 @@
+.containerMain{
+    padding-left: 2%;
+    color: rgb(232, 236, 235);
+
+    display: grid;
+    place-items: center; 
+    height: 55vh;
+    margin: 0;
+}
