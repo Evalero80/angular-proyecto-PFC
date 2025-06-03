@@ -305,17 +305,19 @@ guardarProducto(producto: any, tabla: string): Observable<any> {
 
  // Obtener eventos
 obtenerEventos(): Observable<{ status: string; data: Evento[] }> {
-  const database = localStorage.getItem('database');
+  const database = isPlatformBrowser(this.platformId) 
+    ? localStorage.getItem('database') || '' 
+    : '';
+
   const headers = new HttpHeaders({
     'Content-Type': 'application/json',
-    'Database': database || ''
+    'Database': database
   });
 
   return this.http.get<{ status: string; data: Evento[] }>(
     `${this.calendario}?action=obtener`, { headers }
   );
 }
-
   // Guardar evento
   guardarEvento(evento: Evento): Observable<any> {
     const database = localStorage.getItem('database');
